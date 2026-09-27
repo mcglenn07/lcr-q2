@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bauang Philippines District: LCR 2026 Q2 by branch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F5F8;--surface:#FFFFFF;--ink:#1B2430;--muted:#5B6878;--rule:#D9DFE7;
+  --track:#E6EAF0;--bar:#7C98BF;--hi:#1F4E8C;--on-hi:#FFFFFF;--low:#C4262E;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#141A21;--surface:#1C232D;--ink:#E7ECF2;--muted:#9AA7B6;--rule:#2E3845;
+    --track:#2A3340;--bar:#5E7DA6;--hi:#A9C8F2;--on-hi:#10202F;--low:#FF6B6B;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141A21;--surface:#1C232D;--ink:#E7ECF2;--muted:#9AA7B6;--rule:#2E3845;
+  --track:#2A3340;--bar:#5E7DA6;--hi:#A9C8F2;--on-hi:#10202F;--low:#FF6B6B;
+  color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:15px;line-height:1.45}
+.wrap{max-width:1120px;margin:0 auto;padding:24px 20px 40px}
+.intro h1{font-size:1.75rem;line-height:1.15;margin:0 0 4px;font-weight:700;letter-spacing:-.01em}
+.intro .sub{margin:0;color:var(--muted);max-width:62ch}
+.picker{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:14px 0 12px;margin-top:12px;border-bottom:1px solid var(--rule)}
+.btns{display:flex;flex-wrap:wrap;gap:6px}
+.btns button{font:inherit;font-size:.95rem;font-weight:700;min-width:52px;padding:6px 14px;border-radius:999px;border:1.5px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer}
+.btns button:hover{border-color:var(--hi)}
+.btns button[aria-pressed="true"]{background:var(--hi);border-color:var(--hi);color:var(--on-hi)}
+.btns button:focus-visible{outline:2px solid var(--hi);outline-offset:2px}
+.legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:10px;font-size:.87rem;color:var(--muted)}
+.key{display:inline-flex;align-items:center;gap:7px}
+.dash{display:inline-block;width:0;height:14px;border-left:2px dashed var(--ink)}
+.arrow{color:var(--low);font-size:.75rem;line-height:1}
+.status{margin:8px 0 0;font-size:.92rem;min-height:1.4em}
+.group{margin-top:28px}
+.group h2{font-size:1.2rem;margin:0}
+.group .note{margin:2px 0 12px;color:var(--muted);max-width:70ch}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.panel{margin:0;background:var(--surface);border-radius:8px;padding:14px 14px 10px}
+.panel figcaption{margin-bottom:6px}
+.mt{display:block;font-weight:700;font-size:.95rem;line-height:1.25}
+.mf{display:block;font-size:.8rem;color:var(--muted);margin-top:2px}
+.plot{position:relative;padding-top:18px}
+.row{display:grid;grid-template-columns:40px 1fr 56px;column-gap:10px;align-items:center;height:24px;cursor:pointer;transition:opacity .15s}
+.lbl{font-size:.88rem}
+.track{position:relative;height:14px;background:var(--track);border-radius:3px;overflow:hidden}
+.fill{position:absolute;top:0;bottom:0;left:0;background:var(--bar);border-radius:3px;transition:background .15s}
+.val{font-size:.88rem;white-space:nowrap}
+.val .arrow{margin-left:4px}
+.ov{position:absolute;top:0;bottom:16px;left:50px;right:66px;pointer-events:none;z-index:2}
+.dl{position:absolute;top:16px;bottom:0;border-left:2px dashed var(--ink);opacity:.8}
+.dt{position:absolute;top:0;font-size:.75rem;color:var(--ink);white-space:nowrap}
+.axis{display:grid;grid-template-columns:40px 1fr 56px;column-gap:10px;height:16px;font-size:.72rem;color:var(--muted)}
+.axis div{display:flex;justify-content:space-between;align-items:flex-end}
+.cnt{margin:8px 0 0;font-size:.8rem;color:var(--muted);min-height:1.2em}
+#groups.hl .row{opacity:.25}
+#groups.hl .row.on{opacity:1}
+.row.on .fill{background:var(--hi)}
+.row.on .lbl,.row.on .val{font-weight:700}
+.pl-top{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:12px}
+@media (max-width:720px){.pl-top{grid-template-columns:1fr}}
+.pl-card{background:var(--surface);border-radius:8px;padding:16px}
+.pl-block{margin-top:12px}
+.pl-kpi{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.pl-big{font-size:2.6rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.pl-kpil{color:var(--muted);font-size:.9rem}
+.pl-meter{position:relative;height:10px;background:var(--track);border-radius:5px;overflow:hidden;margin-top:14px}
+.pl-fill{position:absolute;top:0;bottom:0;left:0;background:var(--hi);border-radius:5px;transition:width .2s}
+.pl-ml{display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);margin-top:4px}
+.pl-msg{margin:10px 0 2px;font-weight:700}
+.pl-sub{margin:0;color:var(--muted);font-size:.87rem}
+.pl-field{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;font-size:.9rem}
+.pl-field input,.pl-table input{font:inherit;font-size:.92rem;width:5.5em;padding:5px 7px;border:1.5px solid var(--rule);border-radius:6px;background:var(--bg);color:var(--ink)}
+.pl-field input:focus-visible,.pl-table input:focus-visible,.pl-reset:focus-visible{outline:2px solid var(--hi);outline-offset:1px}
+.pl-pct{display:inline-flex;align-items:center;gap:4px}
+.pl-hint{margin:-4px 0 12px;font-size:.8rem;color:var(--muted)}
+.pl-reset{font:inherit;font-size:.88rem;font-weight:700;padding:6px 12px;border-radius:6px;border:1.5px solid var(--rule);background:transparent;color:var(--ink);cursor:pointer}
+.pl-reset:hover{border-color:var(--hi)}
+.pl-tablewrap{overflow-x:auto}
+.pl-table{width:100%;border-collapse:collapse;min-width:560px;font-size:.9rem}
+.pl-table th,.pl-table td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--rule);vertical-align:middle}
+.pl-table thead th{font-size:.8rem;color:var(--muted);font-weight:700}
+.pl-table tfoot th,.pl-table tfoot td{border-bottom:0;font-weight:700}
+.pl-table tbody tr.on{background:var(--track)}
+.pl-r{display:block;font-variant-numeric:tabular-nums}
+.pl-c{display:block;font-size:.76rem;color:var(--muted);font-weight:400}
+.pl-p.hit .pl-r{color:var(--hi);font-weight:700}
+.pl-h3{font-size:1rem;margin:0 0 10px}
+.pl-levers{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.pl-n{display:block;font-size:1.7rem;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+.pl-lt{display:block;font-size:.9rem}
+.pl-le{display:block;font-size:.8rem;color:var(--muted);margin-top:4px}
+.pl-foot{margin:10px 0 0;font-size:.8rem;color:var(--muted);max-width:75ch}
+footer{margin-top:32px;font-size:.82rem;color:var(--muted);max-width:75ch}
+footer p{margin:0 0 6px}
+@media (max-width:480px){.intro h1{font-size:1.45rem}.wrap{padding:18px 14px 32px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="intro">
+    <h1>Bauang Philippines District</h1>
+    <p class="sub">LCR quarterly report, 2026 Q2. Each chart compares the five branches with the district value.</p>
+  </header>
+
+  <div class="picker">
+    <div class="btns" role="group" aria-label="Highlight a branch"></div>
+    <div class="legend">
+      <span class="key"><i class="dash" aria-hidden="true"></i>District value</span>
+      <span class="key"><span class="arrow" aria-hidden="true">▼</span>Lowest branch</span>
+    </div>
+    <p class="status" id="status" aria-live="polite"></p>
+  </div>
+
+  <div id="groups"></div>
+
+  <footer>
+    <p>Source: LCR Quarterly Report, 2026 Q2. Rates are calculated from the report's counts, so they can differ slightly from LCR's whole-number percentages.</p>
+    <p>Rows 9, 14 to 19, 22 to 24 and 26 are entered by hand in LCR. Check outliers before acting on them.</p>
+    <p>LCR units: A1 is BPD4, A2 is A2B, B1 is BPD5, B2 is Bau2.</p>
+  </footer>
+</main>
+
+<script>
+(function(){
+  var B=["A1","A2","B1","B2","Nag"];
+  var L={A1:"BPD4",A2:"A2B",B1:"BPD5",B2:"Bau2",Nag:"Nag"};
+  var r7=[123,110,149,143,152], r8=[33,27,9,19,26], r23=[25,24,7,16,23];
+
+  var G=[
+    {h:"True percentages",note:"The top number is part of the bottom group, so 100 is the ceiling.",m:[
+      {t:"Sacrament attenders per 100 members",s:"sacrament attenders",f:"row 7 / row 10",n:r7,d:[783,846,856,1119,828],dn:677,dd:4432,dp:1},
+      {t:"Elders attending, per 100 elders",s:"elders attending",f:"row 14 / row 4",n:[30,33,46,62,18],d:[55,57,79,91,88],dn:189,dd:370},
+      {t:"Recent converts at sacrament, per 100 converts",s:"converts at sacrament",f:"row 23 / row 8",n:r23,d:r8,dn:95,dd:114},
+      {t:"Callings per 100 recent converts attending (approx.)",s:"convert callings",f:"row 24 / row 23",n:[3,4,2,5,5],d:r23,dn:19,dd:95}
+    ]},
+    {h:"Ratios per 100",note:"The two groups are different people, so these can pass 100.",m:[
+      {t:"Men attending per 100 women attending",s:"men per 100 women",f:"(row 14 + row 15) / row 16",n:[37,41,56,73,21],d:[60,65,67,92,91],dn:228,dd:375},
+      {t:"Converts baptized per 100 attenders",s:"converts baptized",f:"row 8 / row 7",n:r8,d:r7,dn:114,dd:677},
+      {t:"Ancestor name submitters per 100 attenders",s:"ancestor submitters",f:"row 9 / row 7",n:[32,23,39,74,56],d:r7,dn:224,dd:677},
+      {t:"Endowed recommend holders per 100 attenders",s:"recommend holders",f:"row 2 / row 7",n:[60,64,66,94,84],d:r7,dn:368,dd:677},
+      {t:"Youth recommends per 100 attending youth",s:"youth recommends",f:"row 20 / (row 18 + row 19)",n:[26,28,25,20,23],d:[35,33,35,29,27],dn:122,dd:159}
+    ]},
+    {h:"Count",note:"A raw number, not a rate.",m:[
+      {t:"Brother companionships interviewed",s:"brother interviews",f:"row 12",c:[5,5,11,9,1],tot:31}
+    ]}
+  ];
+
+  var groupsEl=document.getElementById("groups");
+  var statusEl=document.getElementById("status");
+  var btnsEl=document.querySelector(".btns");
+  var ALL=[];
+  var cur="All";
+  var HINT="Pick a branch to highlight it in every chart and see its counts.";
+
+  /* Attendance planner */
+  var PA=r7.slice(), PM=[783,846,856,1119,828];
+  var NOW_A=677, NOW_M=4432, PACE=114;
+  var plan=B.map(function(){return {bap:0,ret:0,mov:0};});
+  var PL={target:21,conv:100};
+  var plSec=null;
+
+  function n0(x){return Math.round(x).toLocaleString("en-US");}
+  function tStr(){return String(+PL.target.toFixed(1));}
+  function delta(d){d=Math.round(d);return d>0?("+"+d.toLocaleString("en-US")):(d<0?("−"+(-d).toLocaleString("en-US")):"no change");}
+  function effTxt(e){return e>=0?("Each 100 adds "+fmt(e,1)+" points."):("Each 100 lowers it by "+fmt(-e,1)+" points.");}
+  function po(k){return plSec.querySelector('[data-o="'+k+'"]');}
+
+  function buildPlanner(){
+    function inp(i,k,label){return '<input type="number" min="0" step="1" value="0" inputmode="numeric" data-i="'+i+'" data-k="'+k+'" aria-label="'+label+'">';}
+    var rows=B.map(function(b,i){
+      return '<tr data-b="'+b+'"><th scope="row">'+b+'</th>'+
+        '<td><span class="pl-r">'+fmt(PA[i]/PM[i]*100,1)+'</span><span class="pl-c">'+PA[i]+' / '+PM[i].toLocaleString("en-US")+'</span></td>'+
+        '<td>'+inp(i,"bap",b+" baptisms")+'</td>'+
+        '<td>'+inp(i,"ret",b+" members who start attending")+'</td>'+
+        '<td>'+inp(i,"mov",b+" records moved to lost members")+'</td>'+
+        '<td class="pl-p"><span class="pl-r"></span><span class="pl-c"></span></td></tr>';
+    }).join("");
+    var sec=el("section","group planner");
+    sec.innerHTML=
+      '<h2>Attendance planner</h2>'+
+      '<p class="note">Test changes to sacrament attenders per 100 members. A baptism adds a member and, if the convert attends, an attender. A member who starts attending adds an attender only. A record moved to lost members removes a member but adds no one to attendance.</p>'+
+      '<div class="pl-top">'+
+        '<div class="pl-card">'+
+          '<div class="pl-kpi"><span class="pl-big" data-o="proj"></span><span class="pl-kpil">projected district rate per 100 members</span></div>'+
+          '<div class="pl-meter" aria-hidden="true"><div class="pl-fill" data-o="fill"></div></div>'+
+          '<div class="pl-ml"><span>'+fmt(NOW_A/NOW_M*100,1)+' now</span><span data-o="tgt"></span></div>'+
+          '<p class="pl-msg" data-o="msg" aria-live="polite"></p>'+
+          '<p class="pl-sub" data-o="sub"></p>'+
+        '</div>'+
+        '<div class="pl-card">'+
+          '<label class="pl-field"><span>Target per 100 members</span><input type="number" min="1" max="99" step="0.1" value="21" inputmode="decimal" data-o="target"></label>'+
+          '<label class="pl-field"><span>New converts who attend</span><span class="pl-pct"><input type="number" min="0" max="100" step="1" value="100" inputmode="numeric" data-o="conv">%</span></label>'+
+          '<p class="pl-hint">Across the district, 83% of recent converts attended last month.</p>'+
+          '<button type="button" class="pl-reset" data-o="reset">Clear changes</button>'+
+        '</div>'+
+      '</div>'+
+      '<div class="pl-card pl-block pl-tablewrap"><table class="pl-table">'+
+        '<thead><tr><th scope="col">Branch</th><th scope="col">Now</th><th scope="col">Baptisms</th><th scope="col">Start attending</th><th scope="col">Moved to lost</th><th scope="col">Projected</th></tr></thead>'+
+        '<tbody>'+rows+'</tbody>'+
+        '<tfoot><tr><th scope="row">District</th><td><span class="pl-r">'+fmt(NOW_A/NOW_M*100,1)+'</span><span class="pl-c">'+NOW_A+' / '+NOW_M.toLocaleString("en-US")+'</span></td>'+
+        '<td data-o="s-bap">0</td><td data-o="s-ret">0</td><td data-o="s-mov">0</td>'+
+        '<td class="pl-p" data-o="dproj"><span class="pl-r"></span><span class="pl-c"></span></td></tr></tfoot>'+
+      '</table></div>'+
+      '<div class="pl-card pl-block">'+
+        '<h3 class="pl-h3" data-o="alone-h"></h3>'+
+        '<div class="pl-levers">'+
+          '<div><span class="pl-n" data-o="n-ret"></span><span class="pl-lt">more members start attending</span><span class="pl-le" data-o="e-ret"></span></div>'+
+          '<div><span class="pl-n" data-o="n-bap"></span><span class="pl-lt" data-o="l-bap"></span><span class="pl-le" data-o="e-bap"></span></div>'+
+          '<div><span class="pl-n" data-o="n-mov"></span><span class="pl-lt">more records moved to lost members</span><span class="pl-le" data-o="e-mov"></span></div>'+
+        '</div>'+
+      '</div>'+
+      '<p class="pl-foot">Rates use total members (row 10), matching the chart above. LCR uses an attendance potential of 4,420 and shows whole numbers, so its figure can differ slightly. If LCR rounds to the nearest whole number, a district rate of 20.5 would already show as 21.</p>';
+
+    plSec=sec;
+    sec.querySelectorAll(".pl-table input").forEach(function(x){
+      x.addEventListener("input",onPlanInput);
+      x.addEventListener("change",onPlanInput);
+    });
+    var tg=po("target"), cv=po("conv");
+    tg.addEventListener("input",function(){var v=Number(tg.value);if(tg.value!==""&&v>0&&v<100){PL.target=v;updatePlanner();}});
+    tg.addEventListener("change",function(){tg.value=tStr();});
+    cv.addEventListener("input",function(){var v=Number(cv.value);if(cv.value!==""&&v>=0&&v<=100){PL.conv=Math.round(v);updatePlanner();}});
+    cv.addEventListener("change",function(){cv.value=PL.conv;});
+    po("reset").addEventListener("click",function(){
+      plan.forEach(function(p){p.bap=0;p.ret=0;p.mov=0;});
+      sec.querySelectorAll(".pl-table input").forEach(function(x){x.value="0";});
+      updatePlanner();
+    });
+    return sec;
+  }
+
+  function onPlanInput(e){
+    var t=e.target, i=+t.dataset.i, k=t.dataset.k, raw=t.value;
+    var v=Math.max(0,Math.floor(Number(raw)||0));
+    var free=PM[i]-PA[i];
+    if(k==="ret")v=Math.min(v,free-plan[i].mov);
+    if(k==="mov")v=Math.min(v,free-plan[i].ret);
+    if(k==="bap")v=Math.min(v,5000);
+    plan[i][k]=v;
+    if((raw!==""||e.type==="change")&&String(v)!==raw)t.value=v;
+    updatePlanner();
+  }
+
+  function updatePlanner(){
+    if(!plSec)return;
+    var c=PL.conv/100, T=PL.target/100;
+    var A=0,M=0,avail=0,sum={bap:0,ret:0,mov:0};
+    var trs=plSec.querySelectorAll(".pl-table tbody tr");
+    B.forEach(function(b,i){
+      var p=plan[i], free=PM[i]-PA[i];
+      var a=PA[i]+p.ret+p.bap*c, m=PM[i]+p.bap-p.mov;
+      A+=a;M+=m;avail+=free-p.ret-p.mov;
+      sum.bap+=p.bap;sum.ret+=p.ret;sum.mov+=p.mov;
+      var cell=trs[i].querySelector(".pl-p");
+      cell.querySelector(".pl-r").textContent=fmt(a/m*100,1);
+      cell.querySelector(".pl-c").textContent=n0(a)+" / "+n0(m);
+      cell.classList.toggle("hit",a/m>=T);
+      trs[i].querySelector('[data-k="ret"]').max=free-p.mov;
+      trs[i].querySelector('[data-k="mov"]').max=free-p.ret;
+    });
+    var now=NOW_A/NOW_M, pr=A/M;
+
+    po("s-bap").textContent=n0(sum.bap);
+    po("s-ret").textContent=n0(sum.ret);
+    po("s-mov").textContent=n0(sum.mov);
+    var dp=po("dproj");
+    dp.querySelector(".pl-r").textContent=fmt(pr*100,1);
+    dp.querySelector(".pl-c").textContent=n0(A)+" / "+n0(M);
+    dp.classList.toggle("hit",pr>=T);
+
+    po("proj").textContent=fmt(pr*100,1);
+    var prog=T<=now?1:Math.max(0,Math.min(1,(pr-now)/(T-now)));
+    po("fill").style.width=(prog*100)+"%";
+    po("tgt").textContent=tStr()+" target";
+    var gapPts=(T-pr)*100, msg;
+    if(pr>=T)msg="Target of "+tStr()+" reached.";
+    else msg=(gapPts<0.1?"Less than 0.1":fmt(gapPts,1))+" points short of "+tStr()+".";
+    po("msg").textContent=msg;
+    po("sub").textContent="Attenders "+n0(NOW_A)+" → "+n0(A)+" ("+delta(A-NOW_A)+"). Members "+n0(NOW_M)+" → "+n0(M)+" ("+delta(M-NOW_M)+").";
+
+    var gap=T*M-A;
+    var nr=gap>0?Math.ceil(gap-1e-9):0;
+    var nb=gap<=0?0:(c>T?Math.ceil(gap/(c-T)-1e-9):null);
+    var nm=gap<=0?0:Math.ceil(M-A/T-1e-9);
+    if(nm>avail)nm=null;
+    po("alone-h").textContent=gap<=0?"Your changes reach the target. No single change is needed.":"To close the remaining gap with one change alone";
+    po("n-ret").textContent=n0(nr);
+    po("e-ret").textContent=effTxt(100*100/M);
+    po("n-bap").textContent=nb===null?"Not possible":n0(nb);
+    po("l-bap").textContent="more baptisms"+(PL.conv<100?(", with "+PL.conv+"% of converts attending"):"");
+    var eb=effTxt(100*((A+100*c)/(M+100)-A/M));
+    if(nb===null)eb="Converts would need to attend at a rate above "+tStr()+"%.";
+    else if(nb>0)eb+=" About "+fmt(nb/PACE,1)+" years at the recent pace of "+PACE+" a year.";
+    po("e-bap").textContent=eb;
+    po("n-mov").textContent=nm===null?"Not enough records":n0(nm);
+    po("e-mov").textContent=effTxt(100*(A/(M-100)-A/M))+" Attendance stays at "+n0(A)+".";
+  }
+
+  function fmt(x,dp){return x.toFixed(dp||0);}
+  function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e;}
+
+  G.forEach(function(g,gi){
+    var sec=el("section","group");
+    sec.appendChild(el("h2",null,g.h));
+    sec.appendChild(el("p","note",g.note));
+    var grid=el("div","grid");
+
+    g.m.forEach(function(m){
+      var isC=!!m.c;
+      m.v=isC?m.c.slice():m.n.map(function(x,i){return x/m.d[i]*100;});
+      m.dv=isC?null:m.dn/m.dd*100;
+      var hi=Math.max.apply(null,m.v.concat(isC?[]:[m.dv]));
+      m.mx=isC?Math.ceil(hi/2)*2:Math.max(100,Math.ceil(hi/10)*10);
+      m.lo=Math.min.apply(null,m.v);
+      m.base=isC?("District total: "+m.tot):("District: "+m.dn+" / "+m.dd);
+      ALL.push(m);
+
+      var fig=el("figure","panel");
+      fig.appendChild(el("figcaption",null,'<span class="mt">'+m.t+'</span><span class="mf">'+m.f+'</span>'));
+      var plot=el("div","plot");
+
+      if(!isC){
+        var p=m.dv/m.mx*100;
+        var tx=p<25?"0":(p>75?"-100%":"-50%");
+        plot.appendChild(el("div","ov",
+          '<div class="dl" style="left:'+p+'%"></div>'+
+          '<div class="dt" style="left:'+p+'%;transform:translateX('+tx+')">District '+fmt(m.dv,m.dp)+'</div>'));
+      }
+
+      m.v.forEach(function(x,i){
+        var b=B[i];
+        var tip=b+(L[b]!==b?" (LCR "+L[b]+")":"")+": "+(isC?x:(m.n[i]+" / "+m.d[i]));
+        var row=el("div","row",
+          '<div class="lbl">'+b+'</div>'+
+          '<div class="track"><div class="fill" style="width:'+(x/m.mx*100)+'%"></div></div>'+
+          '<div class="val">'+(isC?x:fmt(x,m.dp))+(x===m.lo?'<span class="arrow" role="img" aria-label="lowest">▼</span>':'')+'</div>');
+        row.dataset.b=b;
+        row.title=tip;
+        row.addEventListener("click",function(){select(b);});
+        plot.appendChild(row);
+      });
+
+      plot.appendChild(el("div","axis",'<span></span><div><span>0</span><span>'+m.mx+'</span></div><span></span>'));
+      fig.appendChild(plot);
+      m.cntEl=el("p","cnt",m.base);
+      fig.appendChild(m.cntEl);
+      grid.appendChild(fig);
+    });
+
+    sec.appendChild(grid);
+    groupsEl.appendChild(sec);
+    if(gi===0){groupsEl.appendChild(buildPlanner());updatePlanner();}
+  });
+
+  function updateStatus(b){
+    if(b==="All"){statusEl.textContent=HINT;return;}
+    var i=B.indexOf(b);
+    var rates=ALL.filter(function(m){return !m.c;});
+    var above=rates.filter(function(m){return m.v[i]>m.dv;}).length;
+    var lows=ALL.filter(function(m){return m.v[i]===m.lo;}).map(function(m){return m.s;});
+    var code=L[b]!==b?" (LCR "+L[b]+")":"";
+    var t=b+code+" is above the district value on "+above+" of "+rates.length+" rates";
+    t+=lows.length?(" and lowest on "+(lows.length===1?"1 measure":lows.length+" measures")+": "+lows.join(", ")+"."):" and not lowest on any measure.";
+    statusEl.textContent=t;
+  }
+
+  function select(b){
+    if(b===cur&&b!=="All")b="All";
+    cur=b;
+    var i=B.indexOf(b);
+    btnsEl.querySelectorAll("button").forEach(function(x){x.setAttribute("aria-pressed",x.dataset.b===b?"true":"false");});
+    groupsEl.classList.toggle("hl",b!=="All");
+    groupsEl.querySelectorAll(".row").forEach(function(r){r.classList.toggle("on",r.dataset.b===b);});
+    groupsEl.querySelectorAll(".pl-table tbody tr").forEach(function(tr){tr.classList.toggle("on",tr.dataset.b===b);});
+    ALL.forEach(function(m){
+      m.cntEl.textContent=b==="All"?m.base:(b+": "+(m.c?m.c[i]:(m.n[i]+" / "+m.d[i]))+". "+m.base);
+    });
+    updateStatus(b);
+  }
+
+  ["All"].concat(B).forEach(function(b){
+    var bt=el("button",null,b);
+    bt.type="button";
+    bt.dataset.b=b;
+    bt.setAttribute("aria-pressed",b==="All"?"true":"false");
+    if(b!=="All"&&L[b]!==b)bt.title="LCR unit "+L[b];
+    bt.addEventListener("click",function(){select(b);});
+    btnsEl.appendChild(bt);
+  });
+
+  updateStatus("All");
+})();
+</script>
+</body>
+</html>
