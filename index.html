@@ -42,13 +42,17 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperl
 .btns button:active{transform:translateY(1px)}
 .btns button[aria-pressed="true"]{background:var(--hi);border-color:var(--hi);color:var(--on-hi)}
 .btns button:focus-visible{outline:2px solid var(--hi);outline-offset:2px}
-.meta{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:18px;row-gap:4px;margin-top:10px}
-.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:.84rem;color:var(--muted)}
+.pk-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px}
+.pk-pick{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px}
+.pk-lbl{font-size:.84rem;font-weight:700;color:var(--ink)}
+.legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font-size:.84rem;color:var(--muted)}
 .key{display:inline-flex;align-items:center;gap:6px}
 .dash{display:inline-block;width:0;height:14px;border-left:2px dashed var(--ink)}
 .arrow{display:inline-flex;color:var(--low);line-height:1}
 .arrow svg{width:9px;height:7px;fill:currentColor}
-.status{margin:0;font-size:.9rem;min-height:1.4em;flex:1 1 320px}
+.status{margin:10px 0 0;font-size:.92rem}
+.status:empty{display:none}
+.status b{font-weight:700}
 .group{margin-top:40px}
 .group h2{font-size:1.25rem;margin:0;letter-spacing:-.005em}
 .group .note{margin:2px 0 14px;color:var(--muted)}
@@ -141,8 +145,9 @@ footer p{margin:0 0 6px}
   .btns{flex-wrap:nowrap;gap:5px}
   .btns button{flex:1 1 0;min-width:0;padding:6px 0}
   .picker{padding:10px 0 8px}
-  .meta{margin-top:8px}
-  .status{font-size:.84rem;flex-basis:100%}
+  .pk-row{gap:8px}
+  .pk-pick{flex-direction:column;align-items:stretch;gap:6px;width:100%}
+  .status{font-size:.86rem;margin-top:8px}
   .group{margin-top:32px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
@@ -156,14 +161,18 @@ footer p{margin:0 0 6px}
   </header>
 
   <div class="picker">
-    <div class="btns" role="group" aria-label="Highlight a branch"></div>
-    <div class="meta">
-      <div class="legend">
+    <div class="pk-row">
+      <div class="pk-pick">
+        <span class="pk-lbl" id="pk-lbl">Highlight a branch</span>
+        <div class="btns" role="group" aria-labelledby="pk-lbl"></div>
+      </div>
+      <div class="legend" role="group" aria-label="Chart key">
+        <span class="pk-lbl">Chart key</span>
         <span class="key"><i class="dash" aria-hidden="true"></i>District value</span>
         <span class="key"><span class="arrow" aria-hidden="true"><svg viewBox="0 0 9 7"><path d="M0 0h9L4.5 7z"/></svg></span>Lowest branch</span>
       </div>
-      <p class="status" id="status" aria-live="polite"></p>
     </div>
+    <p class="status" id="status" aria-live="polite"></p>
   </div>
 
   <div id="groups"></div>
@@ -205,7 +214,6 @@ footer p{margin:0 0 6px}
   var btnsEl=document.querySelector(".btns");
   var ALL=[];
   var cur="All";
-  var HINT="Pick a branch to highlight it in every chart and see its counts.";
   var LO_SVG='<svg viewBox="0 0 9 7" aria-hidden="true"><path d="M0 0h9L4.5 7z"/></svg>';
 
   /* Attendance planner */
@@ -410,15 +418,15 @@ footer p{margin:0 0 6px}
   });
 
   function updateStatus(b){
-    if(b==="All"){statusEl.textContent=HINT;return;}
+    if(b==="All"){statusEl.textContent="";return;}
     var i=B.indexOf(b);
     var rates=ALL.filter(function(m){return !m.c;});
     var above=rates.filter(function(m){return m.v[i]>m.dv;}).length;
     var lows=ALL.filter(function(m){return m.v[i]===m.lo;}).map(function(m){return m.s;});
     var code=L[b]!==b?" (LCR "+L[b]+")":"";
-    var t=b+code+" is above the district value on "+above+" of "+rates.length+" rates";
+    var t="<b>"+b+code+"</b> is above the district value on "+above+" of "+rates.length+" rates";
     t+=lows.length?(" and lowest on "+(lows.length===1?"1 measure":lows.length+" measures")+": "+lows.join(", ")+"."):" and not lowest on any measure.";
-    statusEl.textContent=t;
+    statusEl.innerHTML=t;
   }
 
   function select(b){
