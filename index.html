@@ -34,7 +34,7 @@ html{scroll-padding-top:env(safe-area-inset-top,0px);accent-color:var(--hi);scro
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:15px;line-height:1.45;-webkit-text-size-adjust:100%}
 .wrap{max-width:1120px;margin:0 auto;padding:28px 20px 48px}
 .intro h1{font-size:2rem;line-height:1.1;margin:0 0 6px;font-weight:700;letter-spacing:-.015em;text-wrap:balance}
-.intro .sub{margin:0;color:var(--muted);max-width:62ch}
+.intro .sub{margin:0;color:var(--muted)}
 .picker{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:12px 0 10px;margin-top:16px;border-bottom:1px solid var(--rule)}
 .btns{display:flex;flex-wrap:wrap;gap:6px}
 .btns button{font:inherit;font-size:.95rem;font-weight:700;min-width:52px;min-height:36px;padding:6px 14px;border-radius:999px;border:1.5px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer;transition:background .15s,border-color .15s,color .15s}
@@ -51,9 +51,18 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperl
 .status{margin:0;font-size:.9rem;min-height:1.4em;flex:1 1 320px}
 .group{margin-top:40px}
 .group h2{font-size:1.25rem;margin:0;letter-spacing:-.005em}
-.group .note{margin:2px 0 14px;color:var(--muted);max-width:70ch}
+.group .note{margin:2px 0 14px;color:var(--muted)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
-@media (min-width:620px){.grid[data-n="4"]{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.grid[data-n="1"]{grid-template-columns:1fr}
+@media (min-width:620px){
+  .grid[data-n="4"],.grid[data-n="5"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid[data-n="5"]>:last-child{grid-column:1/-1}
+}
+@media (min-width:900px){
+  .grid[data-n="5"]{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .grid[data-n="5"]>*{grid-column:span 2}
+  .grid[data-n="5"]>:nth-child(n+4){grid-column:span 3}
+}
 .panel{margin:0;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:14px 16px 12px}
 .panel figcaption{margin-bottom:6px}
 .mt{display:block;font-weight:700;font-size:.95rem;line-height:1.25}
@@ -109,9 +118,9 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperl
 .pl-n{display:block;font-size:1.7rem;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
 .pl-lt{display:block;font-size:.9rem}
 .pl-le{display:block;font-size:.8rem;color:var(--muted);margin-top:4px}
-.pl-foot{margin:10px 0 0;font-size:.8rem;color:var(--muted);max-width:75ch}
+.pl-foot{margin:10px 0 0;font-size:.8rem;color:var(--muted)}
 .pl-table td[data-l]::before{content:attr(data-l);display:none}
-footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--rule);font-size:.82rem;color:var(--muted);max-width:75ch}
+footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--rule);font-size:.82rem;color:var(--muted)}
 footer p{margin:0 0 6px}
 @media (max-width:640px){
   .pl-tablewrap{overflow:visible;padding-top:4px;padding-bottom:4px}
